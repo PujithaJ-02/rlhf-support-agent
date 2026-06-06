@@ -1,0 +1,33 @@
+# ── LLM Settings ──────────────────────────────
+llm:
+  model: "gpt-3.5-turbo"
+  temperature: 0.7
+  max_tokens: 500
+  num_candidates: 3       # number of answer candidates to generate
+
+# ── Embeddings ────────────────────────────────
+embeddings:
+  model: "all-MiniLM-L6-v2"   # local HuggingFace model, no API cost
+
+# ── Vector Store ──────────────────────────────
+vectorstore:
+  persist_directory: "data/processed/chroma_db"
+  collection_name: "support_docs"
+  top_k: 4                # number of chunks to retrieve
+
+# ── Chunking ──────────────────────────────────
+chunking:
+  chunk_size: 500
+  chunk_overlap: 50
+
+# ── Reward Model ──────────────────────────────
+reward_model:
+  base_model: "distilbert-base-uncased"
+  saved_path: "src/reward_model/saved_model"
+  batch_size: 8
+  epochs: 3
+  learning_rate: 2e-5
+
+# ── Feedback ──────────────────────────────────
+feedback:
+  storage_path: "data/preferences/feedback.json"
