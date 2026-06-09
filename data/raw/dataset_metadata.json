@@ -1,0 +1,18 @@
+{
+  "source": "Bitext Customer Support Dataset",
+  "huggingface_id": "bitext/Bitext-customer-support-llm-chatbot-training-dataset",
+  "total_examples": 26872,
+  "categories": {
+    "ORDER": 3988,
+    "SHIPPING": 1970,
+    "CANCEL": 950,
+    "INVOICE": 1999,
+    "PAYMENT": 1998,
+    "REFUND": 2992,
+    "FEEDBACK": 1997,
+    "CONTACT": 1999,
+    "ACCOUNT": 5986,
+    "DELIVERY": 1994,
+    "SUBSCRIPTION": 999
+  }
+}
