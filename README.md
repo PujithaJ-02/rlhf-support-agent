@@ -54,7 +54,8 @@ This is the same alignment loop used in production LLMs like ChatGPT and Claude.
 | Phase 7 | Testing + Deployment | Pending |
 
 ---
-
+### 6. Build the vector store 
+python3 src/retrieval/vectorstore.py
 ## About
 
 Built to demonstrate production-level AI engineering skills including
