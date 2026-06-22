@@ -1,63 +1,47 @@
 """
 src/retrieval/retriever.py
 
-PURPOSE:
-    Clean search interface over ChromaDB.
-    This is the only file other modules should call
-    when they need to search the knowledge base.
-
-    Takes a user question and returns the most relevant
-    Q&A chunks from the 26,872 vectors stored in ChromaDB.
-
-USED BY:
-    src/agent/agent.py
-    src/pipeline/generator.py
+Clean search interface over ChromaDB.
+Loads vector store lazily — only when first search is called.
 """
 
 import sys
 sys.path.insert(0, ".")
 
 from langchain_core.documents import Document
-from src.retrieval.vectorstore import get_vectorstore
+
+_vectorstore = None
+
+
+def get_vs():
+    """Lazy loader — only connects to ChromaDB when first called."""
+    global _vectorstore
+    if _vectorstore is None:
+        from src.retrieval.vectorstore import get_vectorstore
+        _vectorstore = get_vectorstore()
+    return _vectorstore
 
 
 def retrieve(query: str, k: int = 4) -> list[Document]:
     """
     Searches ChromaDB for the most relevant chunks.
-
-    Args:
-        query : the user question in plain English
-        k     : number of chunks to return (default 4)
-
-    Returns:
-        list of Document objects, most relevant first
     """
-    vectorstore = get_vectorstore()
-    results     = vectorstore.similarity_search(query, k=k)
+    results = get_vs().similarity_search(query, k=k)
     return results
 
 
 def retrieve_with_scores(query: str, k: int = 4) -> list[tuple[Document, float]]:
     """
     Same as retrieve() but also returns similarity scores.
-    Score closer to 0 = more similar.
-    Useful for debugging retrieval quality.
     """
-    vectorstore = get_vectorstore()
-    results     = vectorstore.similarity_search_with_score(query, k=k)
+    results = get_vs().similarity_search_with_score(query, k=k)
     return results
 
 
 def format_context(docs: list[Document]) -> str:
     """
-    Formats retrieved chunks into a single string
+    Formats retrieved chunks into a single context string
     ready to be injected into an LLM prompt.
-
-    Args:
-        docs : list of Document objects from retrieve()
-
-    Returns:
-        formatted string with all chunks joined
     """
     context_parts = []
 
