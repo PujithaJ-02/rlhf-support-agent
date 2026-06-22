@@ -57,38 +57,6 @@ Bitext Customer Support Dataset from HuggingFace
 
 ---
 
-## Project structure
-rlhf-support-agent/
-
-├── data/
-
-│   ├── raw/              # 11 category files from Bitext dataset
-
-│   └── preferences/      # Human feedback pairs stored as JSON
-
-├── src/
-
-│   ├── ingestion/        # Document loading and Q&A chunking
-
-│   ├── retrieval/        # ChromaDB vector store and search
-
-│   ├── agent/            # LangChain ReAct agent with tools
-
-│   ├── reward_model/     # distilBERT training, inference, dataset
-
-│   └── pipeline/         # Connects retrieval to LLM generation
-
-├── app/
-
-│   └── streamlit_app.py  # Chat UI with feedback and analytics
-
-├── tests/                # pytest unit tests
-
-└── configs/
-
-└── config.yaml       # All settings in one place
----
-
 ## Setup
 
 You need Ollama installed first. Download it at ollama.com.
