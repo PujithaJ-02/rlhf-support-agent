@@ -29,6 +29,13 @@ The more people use it, the better the reward model gets at picking good answers
 I wanted to understand why ChatGPT feels different from just calling GPT-4 directly. The answer is RLHF — the model is trained on human preference signals, not just next-token prediction. This project builds that mechanism from scratch at a small scale so I could actually see how it works.
 
 The reward model starts trained on synthetic data (real answers vs degraded versions). As users rate answers, it gradually shifts toward what real humans actually find helpful. That gap between synthetic and real is the interesting part.
+The project implements the complete RLHF pipeline across three components:
+
+1. **Reward Model** — fine-tuned distilBERT on 1,000 preference pairs to score any answer 0.0 to 1.0
+2. **DPO Fine-tuning** — Qwen2-0.5B fine-tuned using Direct Preference Optimization on the same preference pairs, updating model weights to prefer better answers by default
+3. **Best-of-N Selection** — at runtime the DPO model generates 3 candidates, the reward model scores them, and the best scoring answer is shown
+
+This makes the RLHF claim fully accurate — reward modeling plus policy optimization via DPO.
 
 ---
 
